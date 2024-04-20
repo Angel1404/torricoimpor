@@ -9,7 +9,7 @@ class AuthServices {
       "password": password,
     };
     var body = json.encode(data);
-    var url = Uri.parse(baseURL + 'auth/login');
+    var url = Uri.parse('${baseURL}auth/login');
     http.Response response = await http.post(
       url,
       headers: headers,
@@ -19,8 +19,7 @@ class AuthServices {
     return response;
   }
 
-  static Future<http.Response> register(String nombrecompleto, String name,
-      String email, String password, String cargo) async {
+  static Future<http.Response> register(String nombrecompleto, String name, String email, String password, String cargo) async {
     Map data = {
       "nombrecompleto": nombrecompleto,
       "name": name,
@@ -29,7 +28,7 @@ class AuthServices {
       "cargo": cargo,
     };
     var body = json.encode(data);
-    var url = Uri.parse(baseURL + 'auth/register');
+    var url = Uri.parse('${baseURL}auth/register');
     http.Response response = await http.post(
       url,
       headers: headers,
@@ -40,7 +39,7 @@ class AuthServices {
   }
 
   static Future<List<dynamic>> getUsers() async {
-    var url = Uri.parse(baseURL + 'auth/showto');
+    var url = Uri.parse('${baseURL}auth/showto');
     http.Response response = await http.get(
       url,
       headers: headers,
@@ -49,9 +48,8 @@ class AuthServices {
     return users;
   }
 
-  static Future<http.Response> updateUser(
-      String userId, Map<String, dynamic> updatedData) async {
-    var url = Uri.parse(baseURL + 'auth/user/$userId');
+  static Future<http.Response> updateUser(String userId, Map<String, dynamic> updatedData) async {
+    var url = Uri.parse('${baseURL}auth/user/$userId');
     var body = json.encode(updatedData);
     http.Response response = await http.put(
       url,
@@ -62,7 +60,7 @@ class AuthServices {
   }
 
   static Future<http.Response> deleteUser(String userId) async {
-    var url = Uri.parse(baseURL + 'auth/user/$userId');
+    var url = Uri.parse('${baseURL}auth/user/$userId');
     http.Response response = await http.delete(
       url,
       headers: headers,

@@ -38,55 +38,57 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage('assets/images/background.png'),
             fit: BoxFit.cover,
           ),
         ),
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            children: [
-              SizedBox(
-                height: 280,
-              ),
-              Container(
-                color: Colors.white,
-                padding: EdgeInsets.symmetric(horizontal: 10),
-                child: TextField(
-                  decoration: InputDecoration(
-                    hintText: 'Ingrese Nombre de Usuario',
-                  ),
-                  onChanged: (value) {
-                    _name = value;
-                  },
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 280,
                 ),
-              ),
-              SizedBox(
-                height: 50,
-              ),
-              Container(
-                color: Colors.white,
-                padding: EdgeInsets.symmetric(horizontal: 10),
-                child: TextField(
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    hintText: 'Ingrese Contraseña',
+                Container(
+                  color: Colors.white,
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: TextField(
+                    decoration: const InputDecoration(
+                      hintText: 'Ingrese Nombre de Usuario',
+                    ),
+                    onChanged: (value) {
+                      _name = value;
+                    },
                   ),
-                  onChanged: (value) {
-                    _password = value;
-                  },
                 ),
-              ),
-              SizedBox(
-                height: 30,
-              ),
-              RoundedButton(
-                btntext: 'Ingresar',
-                onBtnPressed: () => loginPressed(),
-              )
-            ],
+                const SizedBox(
+                  height: 50,
+                ),
+                Container(
+                  color: Colors.white,
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: TextField(
+                    obscureText: true,
+                    decoration: const InputDecoration(
+                      hintText: 'Ingrese Contraseña',
+                    ),
+                    onChanged: (value) {
+                      _password = value;
+                    },
+                  ),
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                RoundedButton(
+                  btntext: 'Ingresar',
+                  onBtnPressed: () => loginPressed(),
+                )
+              ],
+            ),
           ),
         ),
       ),

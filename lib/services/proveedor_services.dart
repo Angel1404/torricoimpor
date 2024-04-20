@@ -8,21 +8,15 @@ class ProvedoorServices {
 
   var token;
   //a;adir producto
-  void addProveedor(String _nombreempresa, String _razonsocial,
-      String _nombreproveedor, int _numcontacto) async {
+  void addProveedor(String nombreempresa, String razonsocial, String nombreproveedor, int numcontacto) async {
     final prefs = await SharedPreferences.getInstance();
-    final key = 'token';
+    const key = 'token';
     final value = prefs.get(key) ?? 0;
 
-    var url = Uri.parse(baseURL + 'proveedor/store');
-    final response = await http.post(url, headers: {
-      'Accept': 'application/json'
-    }, body: {
-      "nombreempresa": "$_nombreempresa",
-      'razonsocial': "$_razonsocial",
-      'nombreproveedor': "$_nombreproveedor",
-      "numcontacto": "$_numcontacto"
-    });
+    var url = Uri.parse('${baseURL}proveedor/store');
+    final response = await http.post(url,
+        headers: {'Accept': 'application/json'},
+        body: {"nombreempresa": nombreempresa, 'razonsocial': razonsocial, 'nombreproveedor': nombreproveedor, "numcontacto": "$numcontacto"});
     status = response.body.contains('error');
 
     var data = json.decode(response.body);
@@ -35,20 +29,19 @@ class ProvedoorServices {
     }
   }
 
-  void editProveedor(String id, String _nombreempresa, String _razonsocial,
-      String _nombreproveedor, int _numcontacto) async {
+  void editProveedor(String id, String nombreempresa, String razonsocial, String nombreproveedor, int numcontacto) async {
     final prefs = await SharedPreferences.getInstance();
-    final key = 'token';
+    const key = 'token';
     final value = prefs.get(key) ?? 0;
-    var url = Uri.parse(baseURL + 'proveedor/update/$id');
+    var url = Uri.parse('${baseURL}proveedor/update/$id');
     http.put(url, headers: {
       'Accept': 'application/json',
       'Authorization': 'Bearer $value'
     }, body: {
-      "nombreempresa": "$_nombreempresa",
-      'razonsocial': "$_razonsocial",
-      'nombreproveedor': "$_nombreproveedor",
-      "numcontacto": "$_numcontacto"
+      "nombreempresa": nombreempresa,
+      'razonsocial': razonsocial,
+      'nombreproveedor': nombreproveedor,
+      "numcontacto": "$numcontacto"
     }).then((response) {
       print('Response status : ${response.statusCode}');
       print('Response body : ${response.body}');
@@ -57,43 +50,40 @@ class ProvedoorServices {
 
   void removeProveedor(String id) async {
     final prefs = await SharedPreferences.getInstance();
-    final key = 'token';
+    const key = 'token';
     final value = prefs.get(key) ?? 0;
-    var url = Uri.parse(baseURL + 'proveedor/destroy/$id');
+    var url = Uri.parse('${baseURL}proveedor/destroy/$id');
 
-    http.delete(url, headers: {
-      'Accept': 'application/json',
-      'Authorization': 'Bearer $value'
-    }).then((response) {
+    http.delete(url, headers: {'Accept': 'application/json', 'Authorization': 'Bearer $value'}).then((response) {
       print('Response status : ${response.statusCode}');
       print('Response body : ${response.body}');
     });
   }
 
-  Future<List> getData() async {
+  Future<List<Map<String, dynamic>>> getData() async {
     final prefs = await SharedPreferences.getInstance();
-    final key = 'token';
+    const key = 'token';
     final value = prefs.get(key) ?? 0;
 
-    var url = Uri.parse(baseURL + 'proveedor/showto');
+    var url = Uri.parse('${baseURL}proveedor/showto');
 
-    http.Response response = await http.get(url, headers: {
-      'Accept': 'application/json',
-      'Authorization': 'Bearer $value'
-    });
-    return json.decode(response.body);
+    final response = await http.get(
+      url,
+      headers: {'Accept': 'application/json', 'Authorization': 'Bearer $value'},
+    );
+    return response.statusCode == 200 ? json.decode(response.body) : [];
   }
 
   _save(String token) async {
     final prefs = await SharedPreferences.getInstance();
-    final key = 'token';
+    const key = 'token';
     final value = token;
     prefs.setString(key, value);
   }
 
   read() async {
     final prefs = await SharedPreferences.getInstance();
-    final key = 'token';
+    const key = 'token';
     final value = prefs.get(key) ?? 0;
     print('read : $value');
   }
